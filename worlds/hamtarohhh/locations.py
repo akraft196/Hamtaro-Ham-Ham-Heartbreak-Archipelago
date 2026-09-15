@@ -7,7 +7,8 @@ if TYPE_CHECKING:
     from .world import HamHamHeartbreakWorld
 
 LOCATION_NAME_TO_ID = {
-    "Sunny Peaks Blushie": 1
+    "Sunny Peaks Blushie": 1,
+    "Sunny Peaks Seeds": 87
 }
 
 class HamHamHeartbreakLocation(Location):
@@ -23,6 +24,7 @@ def create_regular_locations(world: "HamHamHeartbreakWorld"):
     sp_bottom_left = world.get_region("Sunny Peaks Bottom Left")
 
     sp_bottom_left_locations = get_location_names_with_ids(
-        ["Sunny Peaks Blushie"]
+        ["Sunny Peaks Blushie", "Sunny Peaks Seeds"]
     )
+
     sp_bottom_left.add_locations(sp_bottom_left_locations, HamHamHeartbreakLocation)

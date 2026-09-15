@@ -1,3 +1,6 @@
+from collections.abc import Mapping
+from typing import Any
+
 from worlds.AutoWorld import World
 
 from . import items, locations, regions
@@ -14,7 +17,7 @@ class HamHamHeartbreakWorld(World):
 
     origin_region_name = "Sunny Peaks Bottom Left"
 
-    def create_region(self) -> None:
+    def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
         locations.create_all_locations(self)
 
@@ -23,3 +26,8 @@ class HamHamHeartbreakWorld(World):
 
     def create_item(self, name: str) -> items.HamHamHeartbreakItem:
         return items.create_item_with_correct_classification(self, name)
+
+    def fill_slot_data(self) -> Mapping[str, Any]:
+        return self.options.as_dict(
+            "test_option"
+        )
