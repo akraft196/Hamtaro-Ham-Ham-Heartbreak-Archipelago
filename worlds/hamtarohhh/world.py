@@ -1,9 +1,13 @@
 from worlds.AutoWorld import World
 
 from . import items, locations, regions
+from . import options as test_options
 
 class HamHamHeartbreakWorld(World):
     game = "Hamtaro Ham Ham Heartbreak"
+
+    options_dataclass = test_options.TestingOptions
+    options: test_options.TestingOptions
 
     location_name_to_id = locations.LOCATION_NAME_TO_ID
     item_name_to_id = items.ITEM_NAME_TO_ID

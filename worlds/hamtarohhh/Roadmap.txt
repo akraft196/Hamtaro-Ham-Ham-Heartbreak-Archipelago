@@ -1,0 +1,27 @@
+Level by level implementation
+Items that are checks:
+    - Hamchats
+    - Sunflower seeds
+    - Acorns
+    - Quest items
+    Longer term checks:
+        - Shops
+        - Clothes
+        - Gems
+        - Jewelry
+        - Songs
+
+Things to figure out:
+    - Memory locations for all items
+    - If any hamchats are needed to start with (likely)
+    
+
+1.0 implementation:
+    - all levels
+    - hamchats and basic collectables randomized
+
+1.1+
+    - open world
+    - regions added to randomizer
+    - longer term checks implemented
+    - 
