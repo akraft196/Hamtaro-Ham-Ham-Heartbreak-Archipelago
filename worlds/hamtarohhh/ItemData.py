@@ -22,6 +22,6 @@ def initItemData (itemID, progression, gameItemID, itemFlag, memoryAddress):
 
 hamchatItemData: typing.Dict[str, ItemData] = {
     "Blushie": initItemData(1, ItemClassification.progression_deprioritized_skip_balancing, 0x3C, 0x4, baseAddress),
-    "Heyhoo": initItemData(2, ItemClassification.progression, 0x03, 0x400, baseAddress + 6),
+    "Heyhoo": initItemData(2, ItemClassification.progression, 0x30, 0x400, baseAddress + 6),
     "Bluhoo": initItemData(3, ItemClassification.progression, 0x2D, 0x8, baseAddress + 6)
 }
