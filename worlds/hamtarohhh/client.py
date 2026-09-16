@@ -36,31 +36,39 @@ class HamHamHeartbreakClient(BizHawkClient):
             rom_name = ((await bizhawk.read(ctx.bizhawk_ctx, [(0xA0, 9, "ROM")]))[0]).decode("ascii")
             if TESTING:
                 await bizhawk.display_message(ctx.bizhawk_ctx, rom_name)
-            if rom_name != "HAMUTARO":
+            if rom_name != "HAMUTARO3":
                 if TESTING:
                     await bizhawk.display_message(ctx.bizhawk_ctx,"invalid rom {0}", rom_name)
-                return False  # Not a MYGAME ROM
+                return False  # Not a HAMUTARO ROM
         except bizhawk.RequestFailedError:
             if TESTING:
                 print("Request failed")
             return False  # Not able to get a response, say no for now
 
-        # This is a MYGAME ROM
+        # This is a HAMUTARO ROM
         ctx.game = self.game
         ctx.items_handling = 0b001
         ctx.want_slot_data = True
+
+        self.initialize_client()
 
         return True
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
         try:
-            hamchats = await bizhawk.read(ctx.bizhawk_ctx, [(0x300217E, 1, "IWRAM")])
+            hamchats = await bizhawk.read(ctx.bizhawk_ctx, [(0x37CA, 1, "IWRAM")])
             print(hamchats)
-
-            if hamchats[0] != 0:
+            #for testing we're trying to get Heyhoo from the Blushie trigger
+            if 2 not in self.local_checked_locations and int.from_bytes(hamchats[0]) & 0x3C:
+                print("in writer")
+                print(hamchats)
                 self.local_checked_locations.add(2)
                 write_result = await bizhawk.write(ctx.bizhawk_ctx,
-                [(ItemData.dictionaryAddress + self.dictionary_offset, [0x30], "IWRAM")])
+                [(ItemData.baseAddress + ItemData.hamchatItemData["Blushie"].offset, 0x80, "IWRAM"),
+                            (ItemData.baseAddress + ItemData.hamchatItemData["Heyhoo"].offset,
+                            ItemData.hamchatItemData["Heyhoo"].itemFlag, "IWRAM"),
+                            (0x37CA, [0x30], "IWRAM")])
+                self.dictionary_offset += 1
 
         except bizhawk.RequestFailedError:
             # The connector didn't respond. Exit handler and return to main loop to reconnect

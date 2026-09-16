@@ -13,8 +13,8 @@ ITEM_NAME_TO_ID = {
 }
 
 DEFAULT_ITEM_CLASSIFICATIONS = {
-    "Heyhoo": ItemClassification.progression_skip_balancing,
-    "Sunflower Seeds": ItemClassification.filler
+    "Heyhoo": ItemClassification.progression_skip_balancing
+    #"Sunflower Seeds": ItemClassification.filler
 }
 
 class HamHamHeartbreakItem(Item):
@@ -27,8 +27,8 @@ def create_item_with_correct_classification(world: HamHamHeartbreakWorld, name: 
 
 def create_all_items(world: HamHamHeartbreakWorld) -> None:
     itempool: list[Item] = [
-        world.create_item("Heyhoo"),
-        world.create_item("Sunflower Seeds")
+        world.create_item("Heyhoo")
+        #world.create_item("Sunflower Seeds")
     ]
     print(itempool)
 
