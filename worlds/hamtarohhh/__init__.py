@@ -1,1 +1,2 @@
+from .client import HamHamHeartbreakClient as HamHamHeartbreakClient
 from .world import HamHamHeartbreakWorld as HamHamHeartbreakWorld

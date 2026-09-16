@@ -2,21 +2,25 @@ from typing import TYPE_CHECKING
 
 from NetUtils import ClientStatus
 
-import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
+import worlds._bizhawk as bizhawk
 
 from . import ItemData
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
 
+TESTING = True
 
-class MyGameClient(BizHawkClient):
+
+class HamHamHeartbreakClient(BizHawkClient):
+    if TESTING:
+        print("entering client")
     game = "Hamtaro Ham Ham Heartbreak"
     system = "GBA"
     patch_suffix = ".apextension"
 
-    local_checked_locations: Set[int]
+    local_checked_locations: set[int]
     goal_flag: bool
     dictionary_offset: 10
 
@@ -27,10 +31,18 @@ class MyGameClient(BizHawkClient):
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
         try:
             # Check ROM name/patch version
+            if TESTING:
+                print("checking rom")
             rom_name = ((await bizhawk.read(ctx.bizhawk_ctx, [(0xA0, 9, "ROM")]))[0]).decode("ascii")
+            if TESTING:
+                print(rom_name)
             if rom_name != "HAMUTARO":
+                if TESTING:
+                    print("invalid rom {0}", rom_name)
                 return False  # Not a MYGAME ROM
         except bizhawk.RequestFailedError:
+            if TESTING:
+                print("Request failed")
             return False  # Not able to get a response, say no for now
 
         # This is a MYGAME ROM
@@ -51,6 +63,8 @@ class MyGameClient(BizHawkClient):
 
         except bizhawk.RequestFailedError:
             # The connector didn't respond. Exit handler and return to main loop to reconnect
+            if TESTING:
+                print("Request failed")
             pass
 
 
